@@ -1,0 +1,85 @@
+<script src="{{ scriptType }}"></script>
+<script>             
+  $(document).ready(function(){
+    $("#button-confirm").click(function(){
+      if ("{{ action }}".indexOf("cart")>=0) {
+          //window.location.replace("{{ action }}");
+      }
+      const callback = response => {
+          if(response == "CONCLUDED"){
+            var img = document.createElement('img');
+            img.src = "{{ site_url }}/image/loader.gif";
+            img.classList.add("pp_pay_loader");
+            var html = img;
+            jQuery("body").addClass('pp_loader');
+            jQuery("#content").append(html);
+
+            jQuery.ajax({
+                url: "{{ ajax }}",
+                type: "POST",
+                contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                data : "event=PLUGIN_HAS_RECEIVED_CONTROL_BACK_FROM_UI",
+                success: function(res)
+                    {
+                        console.log("success");
+                    },
+                    error: function (errorThrown)
+                    {
+                        console.log("error"+errorThrown);
+                    }
+            });
+            window.location.replace("{{ xredirecturl }}");
+          }
+          else { 
+            jQuery.ajax({
+                url: "{{ ajax }}",
+                type: "POST",
+                contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+                data : "event=PLUGIN_USER_CANCEL",
+                success: function(res)
+                    {
+                        console.log("success");
+                    },
+                    error: function (errorThrown)
+                    {
+                        console.log("error"+errorThrown);
+                    }
+            });
+            var img = document.createElement('img');
+            img.src = "{{ site_url }}/image/loader.gif";
+            img.classList.add("pp_pay_loader");
+            var html = img;
+            jQuery("body").addClass('pp_loader');
+            jQuery("#content").append(html);
+
+            window.location.replace("{{ redirectOnCancel }}");
+          }
+      }
+      window.PhonePe.transact({ tokenUrl: "{{  action }} ", callback });
+      jQuery.ajax({
+            url: "{{ ajax }}",
+            type: "POST",
+            contentType: "application/x-www-form-urlencoded; charset=UTF-8",
+            data : "event=PLUGIN_HAS_LAUNCHED_PAY_PAGE",
+            success: function(res)
+                {
+                    console.log("success");
+                },
+                error: function (errorThrown)
+                {
+                    console.log("error"+errorThrown);
+                }
+        });
+    });
+  });        
+</script>
+<div class="buttons">
+      <div class="pull-right">
+         <input type="submit" value="{{ button_confirm }}" id="button-confirm" class="btn btn-primary" />
+      </div>
+</div>
+
+<style>
+.pp_pay_loader{position: absolute;top: 50%;transform: translate(-50%);left: 50%;}
+.pp_loader:after{content:'';position:fixed;top:0;bottom:0;left:0;right:0;z-index:2;background-color: rgba(0,0,0,0.5);}
+</style>

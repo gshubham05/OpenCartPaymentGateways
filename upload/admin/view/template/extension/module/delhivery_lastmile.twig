@@ -1,0 +1,214 @@
+{{ header }}{{ column_left }}
+
+<div id="content">
+
+	<div class="page-header">
+		<div class="container-fluid">
+			<div class="pull-right">
+            <button type="submit" form="form-convead" data-toggle="tooltip" title="{{ button_save }}" class="btn btn-primary"><i class="fa fa-save"></i></button>
+            <a href="{{ cancel }}" data-toggle="tooltip" title="{{ button_cancel }}" class="btn btn-default"><i class="fa fa-reply"></i></a></div>
+		    <h1>{{ heading_title }}</h1>
+		    <ul class="breadcrumb">
+			  {% for breadcrumb in breadcrumbs %}
+			  <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+			  {% endfor %}
+		    </ul>
+		</div>
+	</div>
+
+	<div class="container-fluid">
+		<!-- {% if curl_exec == false %}
+			<div class="alert alert-warning">
+				<i class="fa fa-check-circle"></i>
+				{{ curl_disable }}
+			</div>
+		{% endif %} -->
+		{% if error_warning %}
+			<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
+				<button type="button" class="close" data-dismiss="alert">&times;</button>
+			</div>
+		{% endif %}
+		{% if success_msg %}
+			<div class="alert alert-success"><i class="fa fa-exclamation-circle"></i> {{ success_msg }}
+				<button type="button" class="close" data-dismiss="alert">&times;</button>
+			</div>
+		{% endif %}
+		
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class="panel-title"><i class="fa fa-pencil"></i> {{ text_edit }}</h3>
+			</div>
+			<div class="panel-body">
+				<form action="{{ action }}" method="post" enctype="multipart/form-data" id="form-convead" class="form-horizontal">
+					<div class="form-group">
+						<label class="col-sm-2 control-label" for="input-status">{{ entry_status }}</label>
+						<div class="col-sm-10">
+							<select name="delhivery_lastmile_status" id="input-status" class="form-control">
+								{% if delhivery_lastmile_status %}
+									<option value="1" selected="selected">{{ text_enabled }}</option>
+									<option value="0">{{ text_disabled }}</option>
+								{% else %}
+									<option value="1">{{ text_enabled }}</option>
+									<option value="0" selected="selected">{{ text_disabled }}</option>
+								{% endif %}
+							</select>
+						</div>			
+					</div>
+					
+					<div class="form-group">
+						<label class="col-sm-2 control-label" for="input-is_production">{{ entry_is_production }}</label>
+						<div class="col-sm-10">
+							<select name="delhivery_lastmile_is_production" id="input-is_production" class="form-control">
+								{% if delhivery_lastmile_is_production %}
+									<option value="1" selected="selected">{{ text_yes }}</option>
+									<option value="0">{{ text_no }}</option>
+								{% else %}
+									<option value="1">{{ text_yes }}</option>
+									<option value="0" selected="selected">{{ text_no }}</option>
+								{% endif %}
+							</select>
+						</div>			
+					</div>
+					<div class="form-group">
+						<label class="col-sm-2 control-label" for="input-method_name">{{ entry_method_name }}</label>
+						<div class="col-sm-10">
+							<input name="delhivery_lastmile_method_name" id="input-method_name" class="form-control" type="text" value="{{ delhivery_lastmile_method_name }}">                
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label class="col-sm-2 control-label" for="input-carrier_title">{{ entry_carrier_title }}</label>
+						<div class="col-sm-10">
+							<input name="delhivery_lastmile_carrier_title" id="input-carrier_title" class="form-control" type="text" value="{{ delhivery_lastmile_carrier_title }}">                
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label class="col-sm-2 control-label" for="input-login_id">{{ entry_login_id }}</label>
+						<div class="col-sm-10">
+							<input name="delhivery_lastmile_login_id" id="input-login_id" class="form-control" type="text" value="{{ delhivery_lastmile_login_id }}">                
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label class="col-sm-2 control-label" for="input-client_id">{{ entry_client_id }}</label>
+						<div class="col-sm-10">
+							<input name="delhivery_lastmile_client_id" id="input-client_id" class="form-control" type="text" value="{{ delhivery_lastmile_client_id }}">                
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-2 control-label" for="input-license_key">{{ entry_license_key }}</label>
+						<div class="col-sm-10">
+							<input name="delhivery_lastmile_license_key" id="input-license_key" class="form-control" type="text" value="{{ delhivery_lastmile_license_key }}">                
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label class="col-sm-2 control-label" for="input-auto_manifest">{{ entry_auto_manifest }}</label>
+						<div class="col-sm-10">
+							<select name="delhivery_lastmile_auto_manifest" id="input-auto_manifest" class="form-control">
+								{% if delhivery_lastmile_auto_manifest %}
+									<option value="1" selected="selected">{{ text_enabled }}</option>
+									<option value="0">{{ text_disabled }}</option>
+								{% else %}
+									<option value="1">{{ text_enabled }}</option>
+									<option value="0" selected="selected">{{ text_disabled }}</option>
+								{% endif %}
+							</select>
+						</div>			
+					</div>
+					<div class="form-group">
+						<label class="col-sm-2 control-label" for="input-debug_mode">{{ entry_debug_mode }}</label>
+						<div class="col-sm-10">
+							<select name="delhivery_lastmile_debug_mode" id="input-debug_mode" class="form-control">
+								{% if delhivery_lastmile_debug_mode %}
+									<option value="1" selected="selected">{{ text_enabled }}</option>
+									<option value="0">{{ text_disabled }}</option>
+								{% else %}
+									<option value="1">{{ text_enabled }}</option>
+									<option value="0" selected="selected">{{ text_disabled }}</option>
+								{% endif %}
+							</select>
+						</div>			
+					</div>
+					
+					
+					<!-- <div class="form-group">
+						<label class="col-sm-2 control-label" for="input-error_message">{{ entry_error_message }}</label>
+						<div class="col-sm-10">
+							<input name="delhivery_lastmile_error_message" id="input-error_message" class="form-control" type="text" value="{{ delhivery_lastmile_error_message }}">                
+						</div>
+					</div>
+					-->
+					<div class="form-group">
+						<label class="col-sm-2 control-label" for="input-cod_method">{{ entry_cod_method }}</label>
+						<div class="col-sm-10">
+							<input name="delhivery_lastmile_cod_method" id="input-cod_method" class="form-control" type="text" value="{{ delhivery_lastmile_cod_method }}">                
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label class="col-sm-2 control-label" for="input-return_address">{{ entry_return_address }}</label>
+						<div class="col-sm-10">
+							<input name="delhivery_lastmile_return_address" id="input-return_address" class="form-control" type="text" value="{{ delhivery_lastmile_return_address }}">                
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label class="col-sm-2 control-label" for="entry-store_name"> Store Name </label>
+						<div class="col-sm-10">
+							<input name="delhivery_lastmile_store_name" id="entry-store_name" class="form-control" type="text" value="{{ delhivery_lastmile_store_name }}">                
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label class="col-sm-2 control-label" for="input-store_address"> Store Address</label>
+						<div class="col-sm-10">
+							<input name="delhivery_lastmile_store_address" id="input-store_address" class="form-control" type="text" value="{{ delhivery_lastmile_store_address }}">                
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label class="col-sm-2 control-label" for="input-gst_no">{{ entry_gst_no }}</label>
+						<div class="col-sm-10">
+							<input name="delhivery_lastmile_gst_no" id="input-gst_no" class="form-control" type="text" value="{{ delhivery_lastmile_gst_no }}">                
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label class="col-sm-2 control-label" for="input-consignee_tin">{{ entry_consignee_tin }}</label>
+						<div class="col-sm-10">
+							<input name="delhivery_lastmile_consignee_tin" id="input-consignee_tin" class="form-control" type="text" value="{{ delhivery_lastmile_consignee_tin }}">                
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label class="col-sm-2 control-label" for="input-cst_no">{{ entry_cst_no }}</label>
+						<div class="col-sm-10">
+							<input name="delhivery_lastmile_cst_no" id="input-cst_no" class="form-control" type="text" value="{{ delhivery_lastmile_cst_no }}">                
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label class="col-sm-2 control-label" for="input-sale_tax_form">{{ entry_sale_tax_form }}</label>
+						<div class="col-sm-10">
+							<input name="delhivery_lastmile_sale_tax_form" id="input-sale_tax_form" class="form-control" type="text" value="{{ delhivery_lastmile_sale_tax_form }}">                
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<label class="col-sm-2 control-label" for="input-heavy_shipment">{{ entry_heavy_shipment }}</label>
+						<div class="col-sm-10">
+							<input name="delhivery_lastmile_heavy_shipment" id="input-heavy_shipment" class="form-control" type="text" value="{{ delhivery_lastmile_heavy_shipment }}">                
+						</div>
+					</div>
+					
+					
+				</form>
+			</div>
+		</div>
+	</div>
+
+</div>
+
+{{ footer }}

@@ -1,0 +1,81 @@
+
+{% if delhiveryLastmile_manageLabel %}
+{% for manage_lb in delhiveryLastmile_manageLabel %}
+	{% if manage_lb.page_break %}
+		<P style="page-break-before: always">
+	{% endif %}
+	<table border="1" cellpadding="5" cellspacing="0">
+		<tr>
+			<td width="162" align="center"><img src="view/image/logo.png" height="30px"></td>
+			<td width="206" align="center"><img src="{{ manage_lb.delhivery_logo }}" height="30px"></td>
+		</tr>
+		<tr>
+			<td><img src="{{ manage_lb.barcode }}" height="60px"/></td>
+			<td>Order#:&nbsp;{{ manage_lb.order_id }}</td>
+		</tr>
+		<tr>
+			<td><strong>Shipping Address :</strong><br>{{ manage_lb.shipping_address }}</td>
+			<td align="center"><strong>{{ manage_lb.methodcode }}</strong></td>
+		</tr>
+		<tr>
+			<td><strong>Seller:</strong>&nbsp; {{ manage_lb.store_name }}<br>{{ manage_lb.store_address }}</td>
+			<td>GSTIN: {{ manage_lb.gst }}<br>
+			TIN: {{ manage_lb.tin }}<br>
+			CST: {{ manage_lb.cst }}<br>
+			</td>
+		</tr>
+		<tr>
+			<td colspan="2">
+			<table border="1" width="100%" cellspacing="0" cellpadding="3">
+				<tr>
+					<td><strong>Product</strong></td>
+					<td><strong>Price</strong></td>
+					<td><strong>Qty</strong></td>
+					<td><strong>Total</strong></td>
+				</tr>
+				{% for manage_items in manage_lb.items %}
+					<tr>
+						<td>{{ manage_items.name }}</td>
+						<td>{{ manage_items.price }}</td>
+						<td>{{ manage_items.qty }}</td>
+						<td>{{ manage_items.total }}</td>
+					</tr>
+				{% endfor %}
+				{% for manage_total in manage_lb.O_totals %}
+					<tr>
+						<td colspan="3" align="right"><strong>{{ manage_total.title }}&nbsp;</strong></td>
+						<td>&nbsp;{{ manage_total.value }}</td>
+					</tr>
+				{% endfor %}
+
+			</table>
+			</td>
+		</tr>
+		<tr>
+			<td>Return Address:&nbsp;{{ manage_lb.return_address }}</td>
+			<td><img src="{{ manage_lb.barcode }}" height="60px"/></td>
+		</tr>
+	</table>
+{% endfor %}
+{% endif %}
+
+
+<style type = "text/css">
+table {
+  border-collapse: collapse;
+  width:450px;
+  
+}
+table, th, td {
+  border: 1px solid black;
+}
+   <!--
+      @media screen {
+         table { font-family:verdana, arial, sans-serif; margin:auto; }
+      }
+
+      @media print {
+          table { font-family:verdana, arial, sans-serif; float:left; }
+      }
+   -->
+</style>

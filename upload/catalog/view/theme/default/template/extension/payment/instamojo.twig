@@ -1,0 +1,24 @@
+{% if instamojo_error %}
+<div class="alert alert-danger alert-dismissible">
+	<i class="fa fa-exclamation-circle"></i>
+	{{ error_warning }}
+	<button type="button" class="close" data-dismiss="alert">&times;</button>
+</div>
+{% else %}
+<div class="buttons">
+	<div class="pull-right">
+
+        <form id="instamojo-payment-form" method="GET" action="{{ action }}">
+            {% if route_start %}
+            <input id="instamojo-route" type='hidden' name='route' value="{{ route_start }}">
+            {% endif %}
+		
+            <input id='confirm-order-button' type='submit' class='btn btn-primary payment-button' value="Confirm Order">
+			<script src="{{ checkoutJSPath }}"></script>
+		</form>
+	</div>
+</div>
+<input type="hidden" id="instamojo-script-running" value="0">
+<script id="instamojo-script" data-cfasync='false' src="{{script}}"></script>
+{% endif %}
+

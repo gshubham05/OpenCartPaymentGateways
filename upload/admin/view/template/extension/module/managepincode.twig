@@ -1,0 +1,131 @@
+{{ header }}{{ column_left }}
+
+<div id="content">
+
+	<div class="page-header">
+		<div class="container-fluid">
+			<div class="pull-right">
+				<a href="{{ download_pincode }}">
+					<button data-toggle="tooltip" title="{{ button_download_pincode }}" class="btn btn-primary"><i class="fa fa-save"></i>&nbsp; {{ button_download_pincode }}</button>
+				</a>
+			</div>
+		    <h1>Manage Pincodes</h1>
+		    <ul class="breadcrumb">
+			  {% for breadcrumb in breadcrumbs %}
+			  <li><a href="{{ breadcrumb.href }}">{{ breadcrumb.text }}</a></li>
+			  {% endfor %}
+		    </ul>
+		</div>
+	</div>
+
+	<div class="container-fluid">
+		{% if error_warning %}
+		<div class="alert alert-danger"><i class="fa fa-exclamation-circle"></i> {{ error_warning }}
+		  <button type="button" class="close" data-dismiss="alert">&times;</button>
+		</div>
+		{% endif %}
+		{% if success %}
+		<div class="alert alert-success"><i class="fa fa-check-circle"></i> {{ success }}
+		  <button type="button" class="close" data-dismiss="alert">&times;</button>
+		</div>
+		{% endif %}
+		
+		
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<h3 class="panel-title"><i class="fa fa-pencil"></i> Manage Pincodes</h3>
+			</div>
+			<div class="panel-body">
+				
+				<form action="{{ filter_action }}" method="get" enctype="multipart/form-data" id="filter_forms">
+					<input type="hidden" name="route" value="extension/module/managepincode" />
+					<input type="hidden" name="user_token" value="{{ user_token }}" />
+					<div class="well">
+						<div class="row">
+							<div class="col-sm-3">
+								<div class="form-group">
+									<label class="control-label" for="input-district">{{ column_district }}</label>
+									<input type="text" name="filter_district" value="{{ filter_district }}" placeholder="{{ column_district }}" id="input-district" class="form-control" />
+								</div>
+							</div>
+							<div class="col-sm-3">
+								<div class="form-group">
+									<label class="control-label" for="input-pin">{{ column_pin }}</label>
+									<input type="text" name="filter_pin" value="{{ filter_pin }}" placeholder="{{ column_pin }}" id="input-pin" class="form-control" />
+								</div>
+							</div>
+							
+							<div class="col-sm-3">
+								<div class="form-group">
+								<br />
+								<button type="submit" id="button-filter" class="btn btn-primary"><i class="fa fa-filter"></i> {{ button_filter }}</button>
+								
+								
+								<a href="{{ reset_filter }}">
+									<button type="button" id="button-filter" class="btn btn-primary">Reset Filter</button>
+								</a>
+								
+								</div>
+							</div>
+							
+						</div>
+					</div>
+				</form>
+				
+				<form action="" method="post" enctype="multipart/form-data" id="form-mpblogcategory">
+					  <div class="table-responsive">
+						<table class="table table-bordered table-hover">
+						  <thead>
+							<tr>
+								<td class="text-left">
+									{% if sort == 'pincode_id' %}
+										<a href="{{ sort_pincode_id }}" class="{{ order|lower }}">{{ column_pincode_id }}</a>
+									{% else %}
+										<a href="{{ sort_pincode_id }}">{{ column_pincode_id }}</a>
+									{% endif %}
+								</td>
+								<td class="text-left">{{ column_district }}</td>
+								<td class="text-left">{{ column_pin }}</td>
+								<td class="text-left">{{ column_pre_paid }}</td>
+								<td class="text-left">{{ column_cash }}</td>
+								<td class="text-left">{{ column_pickup }}</td>
+								<td class="text-left">{{ column_cod }}</td>
+								<td class="text-left">{{ column_state_code }}</td>
+							</tr>
+						  </thead>
+						  <tbody>
+							{% if delhiveryLastmile_managePincode %}
+							{% for manage_pincode in delhiveryLastmile_managePincode %}
+							<tr>
+								<td class="text-left">{{ manage_pincode.pincode_id }}</td>
+								<td class="text-left">{{ manage_pincode.district }}</td>
+								<td class="text-left">{{ manage_pincode.pin }}</td>
+								<td class="text-left">{{ manage_pincode.pre_paid }}</td>
+								<td class="text-left">{{ manage_pincode.cash }}</td>
+								<td class="text-left">{{ manage_pincode.pickup }}</td>
+								<td class="text-left">{{ manage_pincode.cod }}</td>
+								<td class="text-left">{{ manage_pincode.state_code }}</td>
+							</tr>
+							{% endfor %}
+							{% else %}
+							<tr>
+							  <td class="text-center" colspan="8">{{ text_no_results }}</td>
+							</tr>
+							{% endif %}
+						  </tbody>
+						</table>
+					  </div>
+					</form>
+				<div class="row">
+					<div class="col-sm-6 text-left">{{ pagination }}</div>
+					<div class="col-sm-6 text-right">{{ results }}</div>
+				</div>
+				
+				
+			</div>
+		</div>
+	</div>
+
+</div>
+
+{{ footer }}
